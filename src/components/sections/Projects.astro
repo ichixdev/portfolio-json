@@ -4,7 +4,7 @@ import Section from '@/components/Section.astro';
 import { projects } from '@cv';
 ---
 
-<Section>
+<Section title="Proyectos">
   <ul>
     {
       projects.map(({ url, description, highlights, name, isActive }) => {
@@ -12,18 +12,24 @@ import { projects } from '@cv';
           <li>
             <article>
               <header>
-                <a href={url} title={`Ver el proyecto ${name}`}>
-                  <h3>{name}</h3>
-                </a>
+                <h3>
+                  <a
+                    href={url}
+                    title={`Ver el proyecto ${name}`}
+                    target={url ? '_blank' : '_parent'}
+                  >
+                    {name}
+                  </a>
+
+                  {isActive && <span>&bull;</span>}
+                </h3>
               </header>
               <p>{description}</p>
 
               <footer>
-                <ul>
-                  {highlights.map((highlights) => {
-                    return <li>{highlights}</li>;
-                  })}
-                </ul>
+                {highlights.map((highlights) => {
+                  return <span>{highlights}</span>;
+                })}
               </footer>
             </article>
           </li>
@@ -50,6 +56,29 @@ import { projects } from '@cv';
   }
 
   article header {
+    flex: 1;
+  }
+
+  article h3 {
+    margin-bottom: 4px;
+  }
+
+  article h3 span {
+    color: rgb(0, 169, 28);
+  }
+
+  article a {
+    color: #111;
+  }
+
+  article a:hover {
+    text-decoration: underline;
+  }
+
+  article p {
+    font-size: 0.75rem;
+    line-height: 1.2rem;
+    padding-bottom: 8px;
   }
 
   footer {
@@ -62,9 +91,21 @@ import { projects } from '@cv';
   footer span {
     border-radius: 6px;
     background: #eee;
-    color: black;
-    font-size: 0.8rem;
+    color: #444;
+    font-size: 0.6rem;
     font-weight: 500;
     padding: 0.2rem 0.6rem;
+  }
+
+  @media (width <= 768px) {
+    ul {
+      margin-inline: 0px;
+    }
+
+    article {
+      border: none;
+      box-shadow: 0 1px 1px #f2f2f2;
+      padding: 0 0 16px 0;
+    }
   }
 </style>
